@@ -23,21 +23,30 @@ class MainViewModel  @Inject constructor(
     val dataStatus: LiveData<DataStatus> get() = _dataStatus
 
     private var page:Int=1
+    private var totalUsers = 0
 
     init {
         _modelSearchUser.value = ArrayList()
     }
 
     fun loadMore(query : String){
-        page++
-        search(query)
+        if(totalUsers>_modelSearchUser.value!!.size){
+            page++
+            searchUsers(query)
+        }
     }
+
+    fun search(query : String){
+        page=1
+        searchUsers(query)
+    }
+
 
     fun <T> MutableLiveData<T>.notifyObserver() {
         this.value = this.value
     }
 
-    fun search(query : String){
+    private fun searchUsers(query : String){
         networkState(NetworkState.LOADING)
         disposeLast()
         if(query.length>2){
@@ -45,14 +54,21 @@ class MainViewModel  @Inject constructor(
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.ui())
                 .subscribe({
+                    totalUsers = it.total_count
                     if(it.total_count>0){
                         if(page == 1){
                             _modelSearchUser.value!!.clear()
-                            _modelSearchUser.postValue(it.items)
-                        }else{
-                            _modelSearchUser.value?.addAll(it.items)
-                            _modelSearchUser.notifyObserver()
+                        }else if(_modelSearchUser.value!![_modelSearchUser.value!!.size-1].id.isNullOrBlank()){
+                            _modelSearchUser.value!!.remove(_modelSearchUser.value!![_modelSearchUser.value!!.size-1])
                         }
+                        _modelSearchUser.value!!.addAll(it.items)
+
+                        if(totalUsers>_modelSearchUser.value!!.size){
+                            _modelSearchUser.value!!.add(Item())
+                        }
+
+                        _modelSearchUser.notifyObserver()
+
                         _dataStatus.postValue(DataStatus.NOT_EMPTY)
                     }else{
                         _dataStatus.postValue(DataStatus.EMPTY)

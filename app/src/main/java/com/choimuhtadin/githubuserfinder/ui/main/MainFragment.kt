@@ -5,10 +5,12 @@ import android.text.Editable
 import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.choimuhtadin.githubuserfinder.BR
 import com.choimuhtadin.githubuserfinder.R
 import com.choimuhtadin.githubuserfinder.databinding.FragmentMainBinding
 import com.choimuhtadin.githubuserfinder.presentation.base.BaseFragment
+import com.choimuhtadin.githubuserfinder.utils.OnScrollListener
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
@@ -38,22 +40,15 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
                 viewModel.search(text.toString())
             }
         }
-        binding.btnSearch.setOnClickListener {
-            viewModel.loadMore(edtSearch.text.toString())
-        }
     }
 
     private fun initRecyclerview() {
         adapter = SearchUserAdapter()
 
-//        binding.recyclerview.addItemDecoration(SpacesItemDecoration(0F, 0F, 6F, 0F))
         binding.recyclerview.adapter = adapter
-//        binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                hideKeyboard()
-//            }
-//        })
+        binding.recyclerview.addOnScrollListener(OnScrollListener(recyclerview.layoutManager as LinearLayoutManager) {
+            viewModel.loadMore(edtSearch.text.toString())
+        })
 
     }
 
