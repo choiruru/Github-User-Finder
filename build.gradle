@@ -15,7 +15,7 @@ buildscript {
         recyclerViewVersion = '1.1.0'
         androidXAnnotations = '1.0.1'
         androidXLegacySupport = '1.0.0'
-        constrainVersion = '2.0.0-beta7'
+        constrainVersion = '2.0.0-beta8'
         guavaVersion = '24.1-jre'
 
         //Navigation Dependencies
@@ -36,6 +36,9 @@ buildscript {
 
         // Espresso UI Testing
         espressoVersion = "3.2.0"
+
+        //Glide
+        glideVersion = "4.11.0"
 
     }
 
