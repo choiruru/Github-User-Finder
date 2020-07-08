@@ -29,7 +29,7 @@ object ErrorApiHandler {
     private fun getErrorMessage(responseBody: ResponseBody?): String {
         return try {
             val jsonObject = JSONObject(responseBody?.string()?:"")
-            jsonObject.getString("status_message")
+            jsonObject.getString("message")
         } catch (e: Exception) {
             e.message ?: "Something wrong"
         }

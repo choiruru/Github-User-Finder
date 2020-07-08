@@ -18,6 +18,7 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
     private val TAG = "MainFragment"
 
     private lateinit var adapter:SearchUserAdapter
+    private lateinit var onScrollListener: OnScrollListener
 
     override fun getViewModelClass(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -31,24 +32,26 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
         initSearch()
         initRecyclerview()
         initViewModel()
+        initErrorView()
     }
 
     private fun initSearch(){
         binding.edtSearch.addTextChangedListener {
                 text: Editable? ->
             if(!text.isNullOrEmpty()){
+                onScrollListener.reset()
                 viewModel.search(text.toString())
             }
         }
     }
 
     private fun initRecyclerview() {
-        adapter = SearchUserAdapter()
-
-        binding.recyclerview.adapter = adapter
-        binding.recyclerview.addOnScrollListener(OnScrollListener(recyclerview.layoutManager as LinearLayoutManager) {
+        onScrollListener = OnScrollListener(recyclerview.layoutManager as LinearLayoutManager) {
             viewModel.loadMore(edtSearch.text.toString())
-        })
+        }
+        adapter = SearchUserAdapter()
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.addOnScrollListener(onScrollListener)
 
     }
 
@@ -59,5 +62,12 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         })
+    }
+
+    private fun initErrorView(){
+        binding.lytOffline.btnRetry.setOnClickListener {
+            onScrollListener.reset()
+            viewModel.search(binding.edtSearch.text.toString())
+        }
     }
 }

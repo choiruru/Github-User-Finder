@@ -1,5 +1,6 @@
 package com.choimuhtadin.githubuserfinder.utils
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -10,6 +11,16 @@ class OnScrollListener(private val layoutManager: LinearLayoutManager, val onLoa
     var firstVisibleItem = 0
     var visibleItemCount = 0
     var totalItemCount = 0
+
+    private val TAG = "OnScrollListener"
+
+    fun reset(){
+        previousTotal = 0
+        loading = true
+        firstVisibleItem = 0
+        visibleItemCount = 0
+        totalItemCount = 0
+    }
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -27,6 +38,7 @@ class OnScrollListener(private val layoutManager: LinearLayoutManager, val onLoa
 
         if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
             loading = true
+            Log.d(TAG, "ON LOAD MORE: ");
             onLoadMoreListener.invoke()
         }
     }

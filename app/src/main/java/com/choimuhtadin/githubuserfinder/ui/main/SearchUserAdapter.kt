@@ -60,7 +60,7 @@ class SearchUserAdapter @Inject constructor() :
             vHolder.bind(getItem(position))
         }else{
             val vHolder = holder as LoadingViewHolder
-            vHolder.bind(getItem(position))
+            vHolder.bind()
         }
     }
 
@@ -72,8 +72,7 @@ class SearchUserAdapter @Inject constructor() :
     }
 
     class LoadingViewHolder(var binding: ItemLoadMoreBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Item){
-            binding.item = item
+        fun bind(){
             binding.executePendingBindings()
         }
     }

@@ -12,41 +12,60 @@
             type="com.choimuhtadin.githubuserfinder.ui.main.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/lytSearch"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:gravity="center">
-
+            android:layout_height="?android:actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways">
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edtSearch"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <Button
-                android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/type_here_to_search"
+                android:background="@drawable/search_round"
+                android:layout_margin="12dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/lytSearch"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:visibility="@{(viewModel.networkState.status==Status.SUCCESS &amp;&amp; viewModel.dataStatus == DataStatus.NOT_EMPTY) ?View.VISIBLE:View.GONE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:gravity="center"
+            android:padding="24dp"
+            android:text="@string/empty_message"
+            android:background="@color/c_bg_offline"
+            android:textSize="20dp"
+            android:visibility="@{(viewModel.networkState.status==Status.SUCCESS &amp;&amp; viewModel.dataStatus == DataStatus.EMPTY) ?View.VISIBLE:View.GONE}"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:visibility="@{viewModel.networkState.status==Status.FAILED?View.VISIBLE:View.GONE}">
+            <include
+                android:id="@+id/lytOffline"
+                layout="@layout/lyt_offline"
+                app:network="@{viewModel.networkState.failure.msg}" />
+        </FrameLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.networkState.status==Status.LOADING?View.VISIBLE:View.GONE}"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

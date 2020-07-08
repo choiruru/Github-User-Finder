@@ -37,7 +37,12 @@ class MainViewModel  @Inject constructor(
     }
 
     fun search(query : String){
+        if(query.length>2)
+            networkState(NetworkState.LOADING)
+        else
+            networkState(NetworkState.LOADED)
         page=1
+        _modelSearchUser.value!!.clear()
         searchUsers(query)
     }
 
@@ -47,7 +52,6 @@ class MainViewModel  @Inject constructor(
     }
 
     private fun searchUsers(query : String){
-        networkState(NetworkState.LOADING)
         disposeLast()
         if(query.length>2){
             lastDisposable = githubRepository.searchUser("$query+in:login", page.toString())
@@ -56,9 +60,7 @@ class MainViewModel  @Inject constructor(
                 .subscribe({
                     totalUsers = it.total_count
                     if(it.total_count>0){
-                        if(page == 1){
-                            _modelSearchUser.value!!.clear()
-                        }else if(_modelSearchUser.value!![_modelSearchUser.value!!.size-1].id.isNullOrBlank()){
+                        if(_modelSearchUser.value!!.size>0 && _modelSearchUser.value!![_modelSearchUser.value!!.size-1].id.isNullOrBlank()){
                             _modelSearchUser.value!!.remove(_modelSearchUser.value!![_modelSearchUser.value!!.size-1])
                         }
                         _modelSearchUser.value!!.addAll(it.items)
