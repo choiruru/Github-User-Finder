@@ -6,4 +6,4 @@
 - Navigation Component
 - Data Binding
 
-Sample app : [apk-debug](https://github.com/choiruru/Github-User-Finder/blob/master/app-debug.apk)
+Sample app : [apk-debug](https://github.com/choiruru/Github-User-Finder/raw/master/app-debug.apk)
