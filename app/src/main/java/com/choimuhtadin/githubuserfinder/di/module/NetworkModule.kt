@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.module
+package com.choimuhtadin.githubuserfinder.di.module
 
 import android.app.Application
 import com.choimuhtadin.githubuserfinder.BuildConfig
@@ -9,7 +9,6 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

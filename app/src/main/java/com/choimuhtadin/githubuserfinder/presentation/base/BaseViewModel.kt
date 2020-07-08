@@ -1,15 +1,12 @@
-package com.example.chucknorrisjokes.presentation.base
+package com.choimuhtadin.githubuserfinder.presentation.base
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.chucknorrisjokes.data.remote.base.Failure
-import com.example.chucknorrisjokes.data.remote.base.StatusCode
-import com.example.chucknorrisjokes.presentation.exception.NetworkState
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.choimuhtadin.githubuserfinder.data.remote.base.Failure
+import com.choimuhtadin.githubuserfinder.data.remote.base.StatusCode
+import com.choimuhtadin.githubuserfinder.presentation.state.NetworkState
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 
 abstract class BaseViewModel : ViewModel() {

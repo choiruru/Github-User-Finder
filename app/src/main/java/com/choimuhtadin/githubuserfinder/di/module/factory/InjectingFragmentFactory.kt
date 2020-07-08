@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.module.factory
+package com.choimuhtadin.githubuserfinder.di.module.factory
 
 import android.util.Log
 import androidx.fragment.app.Fragment

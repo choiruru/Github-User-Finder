@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.data.remote.base
+package com.choimuhtadin.githubuserfinder.data.remote.base
 
 
 /**

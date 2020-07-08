@@ -2,8 +2,8 @@ package com.choimuhtadin.githubuserfinder.di.component
 
 import android.app.Application
 import com.choimuhtadin.githubuserfinder.GithubApp
+import com.choimuhtadin.githubuserfinder.di.module.*
 import com.choimuhtadin.githubuserfinder.di.scope.ApplicationScope
-import com.example.chucknorrisjokes.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector

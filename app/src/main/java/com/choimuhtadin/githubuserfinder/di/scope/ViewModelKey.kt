@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.scope
+package com.choimuhtadin.githubuserfinder.di.scope
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

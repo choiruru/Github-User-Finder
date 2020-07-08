@@ -1,12 +1,17 @@
 package com.choimuhtadin.githubuserfinder.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.choimuhtadin.githubuserfinder.R
+import com.choimuhtadin.githubuserfinder.databinding.ActivityMainBinding
+import com.choimuhtadin.githubuserfinder.presentation.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun onViewReady(savedInstance: Bundle?) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.module
+package com.choimuhtadin.githubuserfinder.di.module
 
 import com.choimuhtadin.githubuserfinder.ui.main.MainActivity
 import dagger.Module

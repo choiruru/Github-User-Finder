@@ -1,5 +1,6 @@
-package com.example.chucknorrisjokes.data.remote.base
+package com.choimuhtadin.githubuserfinder.data.remote.base
 
+import com.choimuhtadin.githubuserfinder.data.remote.base.StatusCode
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.HttpException

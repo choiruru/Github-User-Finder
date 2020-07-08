@@ -1,5 +1,7 @@
-package com.example.chucknorrisjokes.data.remote.base
+package com.choimuhtadin.githubuserfinder.data.remote.base
 
+import com.choimuhtadin.githubuserfinder.data.remote.base.ErrorApiHandler
+import com.choimuhtadin.githubuserfinder.data.remote.base.Failure
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.SingleTransformer

@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.module
+package com.choimuhtadin.githubuserfinder.di.module
 
 import com.choimuhtadin.githubuserfinder.di.scope.ApplicationScope
 import com.choimuhtadin.githubuserfinder.domain.utils.SchedulerProvider

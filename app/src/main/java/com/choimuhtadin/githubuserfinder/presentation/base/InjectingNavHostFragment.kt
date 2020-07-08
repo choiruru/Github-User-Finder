@@ -1,9 +1,9 @@
-package com.example.chucknorrisjokes.presentation.base
+package com.choimuhtadin.githubuserfinder.presentation.base
 
 import android.content.Context
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
-import com.example.chucknorrisjokes.di.module.factory.InjectingFragmentFactory
+import com.choimuhtadin.githubuserfinder.di.module.factory.InjectingFragmentFactory
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 

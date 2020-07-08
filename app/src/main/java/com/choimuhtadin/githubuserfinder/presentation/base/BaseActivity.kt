@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.presentation.base
+package com.choimuhtadin.githubuserfinder.presentation.base
 
 import android.os.Bundle
 import android.view.MenuItem

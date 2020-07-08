@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.presentation.exception
+package com.choimuhtadin.githubuserfinder.presentation.state
 
 enum class DataStatus {
     EMPTY,

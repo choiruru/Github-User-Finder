@@ -1,4 +1,4 @@
-package com.example.chucknorrisjokes.di.module.factory
+package com.choimuhtadin.githubuserfinder.di.module.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

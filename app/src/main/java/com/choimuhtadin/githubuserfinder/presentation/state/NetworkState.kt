@@ -1,6 +1,6 @@
-package com.example.chucknorrisjokes.presentation.exception
+package com.choimuhtadin.githubuserfinder.presentation.state
 
-import com.example.chucknorrisjokes.data.remote.base.Failure
+import com.choimuhtadin.githubuserfinder.data.remote.base.Failure
 
 
 data class NetworkState constructor(
