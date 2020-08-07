@@ -3,6 +3,7 @@ package com.choimuhtadin.githubuserfinder.ui.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,16 +15,11 @@ import com.choimuhtadin.githubuserfinder.databinding.ItemUserBinding
 import javax.inject.Inject
 
 class SearchUserAdapter @Inject constructor() :
-    ListAdapter<Item,  RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<Item>(){
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
-        return oldItem == newItem
-    }
-
-}) {
+    ListAdapter<Item,  RecyclerView.ViewHolder>(
+        AsyncDifferConfig.Builder(
+            DiffItemBase
+        ).build()
+    ) {
     private val TAG = "SearchJokeAdapter"
 
     private val POST_TYPE_USER = 1
@@ -76,4 +72,15 @@ class SearchUserAdapter @Inject constructor() :
             binding.executePendingBindings()
         }
     }
+}
+
+object DiffItemBase : DiffUtil.ItemCallback<Item>(){
+    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        return oldItem == newItem
+    }
+
 }

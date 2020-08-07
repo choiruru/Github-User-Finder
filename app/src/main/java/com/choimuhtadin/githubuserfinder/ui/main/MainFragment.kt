@@ -38,7 +38,7 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
     private fun initSearch(){
         binding.edtSearch.addTextChangedListener {
                 text: Editable? ->
-            if(!text.isNullOrEmpty()){
+            text?.let {
                 onScrollListener.reset()
                 viewModel.search(text.toString())
             }
@@ -56,11 +56,10 @@ class MainFragment @Inject constructor() : BaseFragment<FragmentMainBinding, Mai
     }
 
     private fun initViewModel() {
-        binding.setVariable(BR.viewModel, viewModel)
+        binding.viewModel = viewModel
         viewModel.modelSearchUser.observe(this, Observer {
             Log.d(TAG, "size: "+it.size);
             adapter.submitList(it)
-            adapter.notifyDataSetChanged()
         })
     }
 

@@ -1,5 +1,6 @@
 package com.choimuhtadin.githubuserfinder.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.choimuhtadin.githubuserfinder.data.remote.model.Item
@@ -16,8 +17,8 @@ class MainViewModel  @Inject constructor(
 ): BaseViewModel() {
     private val TAG = "MainViewModel"
 
-    private val _modelSearchUser = MutableLiveData<MutableList<Item>>()
-    val modelSearchUser: LiveData<MutableList<Item>> get() = _modelSearchUser
+    private val _modelSearchUser = MutableLiveData<List<Item>>()
+    val modelSearchUser: LiveData<List<Item>> get() = _modelSearchUser
 
     private val _dataStatus = MutableLiveData<DataStatus>()
     val dataStatus: LiveData<DataStatus> get() = _dataStatus
@@ -25,14 +26,12 @@ class MainViewModel  @Inject constructor(
     private var page:Int=1
     private var totalUsers = 0
 
-    init {
-        _modelSearchUser.value = ArrayList()
-    }
-
     fun loadMore(query : String){
-        if(totalUsers>_modelSearchUser.value!!.size){
-            page++
-            searchUsers(query)
+        _modelSearchUser.value?.let {
+            if(totalUsers>it.size){
+                page++
+                searchUsers(query)
+            }
         }
     }
 
@@ -42,13 +41,9 @@ class MainViewModel  @Inject constructor(
         else
             networkState(NetworkState.LOADED)
         page=1
-        _modelSearchUser.value!!.clear()
+        _modelSearchUser.postValue(mutableListOf())
+
         searchUsers(query)
-    }
-
-
-    fun <T> MutableLiveData<T>.notifyObserver() {
-        this.value = this.value
     }
 
     private fun searchUsers(query : String){
@@ -57,19 +52,23 @@ class MainViewModel  @Inject constructor(
             lastDisposable = githubRepository.searchUser("$query+in:login", page.toString())
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.ui())
-                .subscribe({
-                    totalUsers = it.total_count
-                    if(it.total_count>0){
-                        if(_modelSearchUser.value!!.size>0 && _modelSearchUser.value!![_modelSearchUser.value!!.size-1].id.isNullOrBlank()){
-                            _modelSearchUser.value!!.remove(_modelSearchUser.value!![_modelSearchUser.value!!.size-1])
-                        }
-                        _modelSearchUser.value!!.addAll(it.items)
+                .subscribe({ models ->
+                    totalUsers = models.total_count
+                    if(models.total_count>0){
 
-                        if(totalUsers>_modelSearchUser.value!!.size){
-                            _modelSearchUser.value!!.add(Item())
+                        val temp = _modelSearchUser.value?.toMutableList() ?: mutableListOf()
+
+                        if(temp.isNotEmpty() && temp[temp.size-1].id.isBlank()){
+                            temp.removeAt(temp.size-1)
                         }
 
-                        _modelSearchUser.notifyObserver()
+                        temp.addAll(models.items)
+
+                        if(totalUsers>temp.size){
+                            temp.add(Item())
+                        }
+
+                        _modelSearchUser.postValue(temp)
 
                         _dataStatus.postValue(DataStatus.NOT_EMPTY)
                     }else{
